@@ -16,11 +16,11 @@ getMovie = function (torrent) {
 	return file
 }
 
-router.get('/video/:magnet', function(req, res, next) {
+router.get('/video/:hash', function(req, res, next) {
 	
-	var magnetUri = 'magnet:?xt=urn:btih:' + req.params.magnet;
+	var hash = req.params.hash;
 	
-	client.add(magnetUri, function (torrent) {		
+	client.add(hash, function (torrent) {		
 		var file = getMovie(torrent);
 		var total = file.length;
 		

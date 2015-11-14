@@ -1,10 +1,10 @@
-$(function(){				
+$(function(){  
   $('#submit').click(function(e){
     e.preventDefault();
-    console.log('Post magnet uri');
+    console.log('Post info hash');
 
-    magnetUri = $('#magnet').val();
+    hash = $('#torrent').val();
     
-    $('#player').html('<source src="http://localhost:3000/video/' + magnetUri + '" type="video/mp4">');
+    $('#player').html('<source src="http://api.pizza.bergeron/video/' + hash + '" type="video/mp4">');
   });
 });
