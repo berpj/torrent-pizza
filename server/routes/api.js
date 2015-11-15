@@ -53,7 +53,7 @@ router.get('/video-info/:hash', function(req, res, next) {
 		client.add(hash, function (torrent) {	
 			var file = getMovie(torrent);
 			
-			res.json({ torrent: file.infoHash, name: file.name, size: file.length })
+			res.json({ torrent: torrent.infoHash, name: file.name, size: file.length })
 		});
 	}
 	catch (err) {
