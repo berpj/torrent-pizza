@@ -45,4 +45,20 @@ router.get('/video/:hash', function(req, res, next) {
 	}
 });
 
+router.get('/video-info/:hash', function(req, res, next) {
+	
+	var hash = req.params.hash;
+	
+	try {
+		client.add(hash, function (torrent) {	
+			var file = getMovie(torrent);
+			
+			res.json({ torrent: file.infoHash, name: file.name, size: file.length })
+		});
+	}
+	catch (err) {
+		console.error('got error', err);
+	}
+});
+
 module.exports = router;
