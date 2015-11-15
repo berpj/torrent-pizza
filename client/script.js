@@ -5,6 +5,6 @@ $(function(){
 
     hash = $('#torrent').val();
     
-    $('#player').html('<source src="http://api.pizza.bergeron/video/' + hash + '" type="video/mp4">');
+    $('#player').html('<source src="http://api.pizza.bergeron.io/video/' + hash + '" type="video/mp4">');
   });
 });
