@@ -30,7 +30,7 @@ router.get('/add/:hash', function(req, res, next) {
 			torrent.swarm.on('upload', function() {
 				console.log((torrent.ratio * 100).toFixed(2) + '%');
 					
-				if (torrent.length == torrent.downloaded && torrent.ratio * 100 >= 0.03) {
+				if (torrent.length == torrent.downloaded && torrent.ratio >= 1.5) {
 					console.log('Deleting torrent');
 					torrent.swarm.destroy(cb);
 					torrent.discovery.stop(cb);
