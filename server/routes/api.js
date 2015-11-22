@@ -16,12 +16,15 @@ getMovie = function (torrent) {
 	return file
 }
 
+function cb () {}
+
 router.get('/video/:hash', function(req, res, next) {
 	
 	var hash = req.params.hash;
 	
 	try {
-		client.add(hash, function (torrent) {	
+		torrent = client.get(hash);
+
 			var file = getMovie(torrent);
 			var total = file.length;
 			
@@ -38,7 +41,6 @@ router.get('/video/:hash', function(req, res, next) {
 			var stream = file.createReadStream({start: start, end: end});
 			res.writeHead(206, { 'Content-Range': 'bytes ' + start + '-' + end + '/' + total, 'Accept-Ranges': 'bytes', 'Content-Length': chunksize, 'Content-Type': 'video/mp4' });
 			stream.pipe(res);
-		});
 	}
 	catch (err) {
 		console.error('got error', err);
@@ -46,14 +48,24 @@ router.get('/video/:hash', function(req, res, next) {
 });
 
 router.get('/video-info/:hash', function(req, res, next) {
-	
+
 	var hash = req.params.hash;
-	
+
 	try {
 		client.add(hash, function (torrent) {	
 			var file = getMovie(torrent);
-			
-			res.json({ torrent: torrent.infoHash, name: file.name, size: file.length })
+
+			torrent.swarm.on('upload', function() {
+				console.log((torrent.ratio * 100).toFixed(2) + '%');
+					
+				if (torrent.length == torrent.downloaded && torrent.ratio >= 1.5) {
+					console.log('Deleting torrent');
+					torrent.swarm.destroy(cb);
+					torrent.discovery.stop(cb);
+				}
+			});
+
+			res.json({ torrent: torrent.infoHash, name: file.name, size: file.length });
 		});
 	}
 	catch (err) {

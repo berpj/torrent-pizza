@@ -28,9 +28,24 @@ Henry Rollins
       form {
         margin-top: 20px;
       }
+      
+      #console.has-content {
+        border-top: 1px solid #ddd;
+        margin-top: 20px;
+        padding-top: 20px;
+      }
     </style>
   </head>
   <body>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https:////www.google-analytics.com/analytics.js','ga');
+      ga('create', 'UA-28397864-19', 'auto');
+      ga('send', 'pageview');
+    </script>
+
     <div class="container">
       <h1 class="text-center text-pizza"><i class="em em-pizza"></i> TorrentPizza</h1>
       
@@ -43,6 +58,17 @@ Henry Rollins
         </div>
         <button type="submit" id="submit" class="btn btn-default">Start streaming!</button>
       </form>
+      
+      <div id="console" class="has-content">
+        Enter a torrent to start...<br>
+      </div>
+      
+      <!--
+      <div class="text-muted text-center">
+        Donations: <strong><a href="bitcoin:18tWFBT2aedQAG6qV27hGdHKibCcgEvFVY">18tWFBT2aedQAG6qV27hGdHKibCcgEvFVY</a></strong><br>
+        Made by <a href="https://twitter.com/berpj" target="_BLANK">Pierre-Jean Bergeron</a> · <a href="https://github.com/berpj/torrent-pizza" target="_BLANK">Fork me</a>
+      </div>
+      -->
       
     </div>
   
