@@ -18,55 +18,68 @@ getMovie = function (torrent) {
 
 function cb () {}
 
-router.get('/video/:hash', function(req, res, next) {
-	
+router.get('/add/:hash', function(req, res, next) {
 	var hash = req.params.hash;
-	
-	try {
-		torrent = client.get(hash);
 
+	try {
+		client.add(hash, function (torrent) {
 			var file = getMovie(torrent);
-			var total = file.length;
 			
-			var range = req.headers.range;
-			var parts = range.replace(/bytes=/, "").split("-");
-			var partialstart = parts[0];
-			var partialend = parts[1];
-			var start = parseInt(partialstart, 10);
-			var end = partialend ? parseInt(partialend, 10) : total - 1;
-			var chunksize = (end - start) + 1;
+			console.log('Adding torrent');
+
+			torrent.swarm.on('upload', function() {
+				console.log((torrent.ratio * 100).toFixed(2) + '%');
+					
+				if (torrent.length == torrent.downloaded && torrent.ratio * 100 >= 0.03) {
+					console.log('Deleting torrent');
+					torrent.swarm.destroy(cb);
+					torrent.discovery.stop(cb);
+				}
+			});
 			
-			console.log('RANGE: ' + start + ' - ' + end + ' = ' + chunksize);
-			
-			var stream = file.createReadStream({start: start, end: end});
-			res.writeHead(206, { 'Content-Range': 'bytes ' + start + '-' + end + '/' + total, 'Accept-Ranges': 'bytes', 'Content-Length': chunksize, 'Content-Type': 'video/mp4' });
-			stream.pipe(res);
+			res.end();
+		});
 	}
 	catch (err) {
 		console.error('got error', err);
 	}
 });
 
-router.get('/video-info/:hash', function(req, res, next) {
-
+router.get('/metadata/:hash', function(req, res, next) {
 	var hash = req.params.hash;
 
 	try {
-		client.add(hash, function (torrent) {	
-			var file = getMovie(torrent);
+		var torrent = client.get(hash);
+		var file = getMovie(torrent);
 
-			torrent.swarm.on('upload', function() {
-				console.log((torrent.ratio * 100).toFixed(2) + '%');
-					
-				if (torrent.length == torrent.downloaded && torrent.ratio >= 1.5) {
-					console.log('Deleting torrent');
-					torrent.swarm.destroy(cb);
-					torrent.discovery.stop(cb);
-				}
-			});
+		res.json({ torrent: torrent.infoHash, name: file.name, size: file.length });
+	}
+	catch (err) {
+		console.error('got error', err);
+	}
+});
 
-			res.json({ torrent: torrent.infoHash, name: file.name, size: file.length });
-		});
+router.get('/stream/:hash', function(req, res, next) {
+	var hash = req.params.hash;
+
+	try {
+		var torrent = client.get(hash);
+		var file = getMovie(torrent);
+		var total = file.length;
+
+		var range = req.headers.range;
+		var parts = range.replace(/bytes=/, "").split("-");
+		var partialstart = parts[0];
+		var partialend = parts[1];
+		var start = parseInt(partialstart, 10);
+		var end = partialend ? parseInt(partialend, 10) : total - 1;
+		var chunksize = (end - start) + 1;
+
+		console.log('RANGE: ' + start + ' - ' + end + ' = ' + chunksize);
+
+		var stream = file.createReadStream({start: start, end: end});
+		res.writeHead(206, { 'Content-Range': 'bytes ' + start + '-' + end + '/' + total, 'Accept-Ranges': 'bytes', 'Content-Length': chunksize, 'Content-Type': 'video/mp4' });
+		stream.pipe(res);
 	}
 	catch (err) {
 		console.error('got error', err);
