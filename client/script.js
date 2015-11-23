@@ -1,12 +1,24 @@
 $(function(){
   var api = 'api.pizza.bergeron.io';
   
-  $('#submit').click(function(e){
+  $('#input').on('input', function(e){
+    if ($('#input').val().length > 0)
+      $('#instructions').show();
+    else
+      $('#instructions').hide();
+  });
+  
+  $('form').submit(function(e){
     e.preventDefault();
     
-    $('#console').append('Starting...<br>');
+    $('form').hide();
+    
+    $('#player-holder').html('<video id="player" autoplay="true" controls></video>');
+    
+    $('#console').html('Starting...');
+    $('#console').show();
 
-    hash = $('#torrent').val();
+    hash = $('#input').val();
     
     $.get('http://' + api + '/add/' + hash, function(data) {
       $.get('http://' + api + '/metadata/' + hash, function(data) {
@@ -14,7 +26,7 @@ $(function(){
         
         window.location.hash = data.torrent
         
-        $('#console').append('Streaming ' + data.name + ' (' + (data.size / (1024 * 1024)).toFixed(2) + ' MB)<br>');
+        $('#console').html(data.name.substr(0, data.name.lastIndexOf('.')).split('.').join(' '));
         
         $('#player').html('<source src="http://' + api + '/stream/' + hash + '" type="video/mp4">');
       });
@@ -22,8 +34,8 @@ $(function(){
   });
   
   if (window.location.hash) {
-    $('#torrent').val(window.location.hash.substr(window.location.hash.indexOf('#')+1));
+    $('#input').val(window.location.hash.substr(window.location.hash.indexOf('#')+1));
     
-    $('#submit').click();
+    $('form').submit();
   }
 });

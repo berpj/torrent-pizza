@@ -17,22 +17,73 @@ Henry Rollins
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
     <style>
-      #player {
-        width: 100%;
+      body {
+        background-color: #333030;
+        color: #bbb;
       }
       
-      .text-pizza {
-        color: #FF6347;
+      a, a:visited {
+        color: #dfdfdf;
+        text-decoration: none !important;
+      }
+      
+      a:hover, a:active {
+        color: #eee;
+        text-decoration: none !important;
+      }
+      
+      h1 {
+        margin-bottom: 35px;
+        font-size: 2.9em;
+        width: auto;
+      }
+      
+      h1 a {
+        color: #FF6347 !important;
       }
       
       form {
+        margin-top: 65px !important;
+        margin-bottom: 65px !important;
+      }
+      
+      .input-lg {
+        height: 60px !important;
+        font-size: 2.2em;
+      }
+      
+      #instructions {
+        font-size: 1.8em;
         margin-top: 20px;
       }
       
-      #console.has-content {
-        border-top: 1px solid #ddd;
-        margin-top: 20px;
-        padding-top: 20px;
+      #player-holder {
+        min-width: 100%;
+        text-align: center;
+      }
+    
+      #player {
+        width: 65%;
+        background-color: black;
+      }
+      
+      #console {
+        margin-top: 45px;
+        padding-top: 18px;
+        padding-bottom: 18px;
+        font-size: 1.7em;
+        background-color: #222;
+        width: 100%;
+      }
+      
+      #footer {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #333030;
+        padding-top: 10px;
+        padding-bottom: 10px;
       }
     </style>
   </head>
@@ -47,30 +98,30 @@ Henry Rollins
     </script>
 
     <div class="container">
-      <h1 class="text-center text-pizza"><i class="em em-pizza"></i> TorrentPizza</h1>
-      
-      <video id="player" autoplay="true" controls>
-      </video>
+      <h1 class="text-center"><a href="/"><i class="em em-pizza"></i> TorrentPizza</a></h1>
+
+      <div id="player-holder"></div>
       
       <form class="form-inline text-center">
+        
         <div class="form-group">
-          <input type="text" id="torrent" placeholder="Torrent" class="form-control">
+          <input type="text" id="input" placeholder="Enter a torrent hash" class="form-control input-lg">
         </div>
-        <button type="submit" id="submit" class="btn btn-default">Start streaming!</button>
+        <div id="instructions" class="text-muted" style="display: none">Press Enter to start streaming...</div>
+        <!--<button type="submit" id="submit" class="btn btn-default">Start streaming!</button>-->
       </form>
-      
-      <div id="console" class="has-content">
-        Enter a torrent to start...<br>
-      </div>
-      
-      <!--
-      <div class="text-muted text-center">
-        Donations: <strong><a href="bitcoin:18tWFBT2aedQAG6qV27hGdHKibCcgEvFVY">18tWFBT2aedQAG6qV27hGdHKibCcgEvFVY</a></strong><br>
-        Made by <a href="https://twitter.com/berpj" target="_BLANK">Pierre-Jean Bergeron</a> · <a href="https://github.com/berpj/torrent-pizza" target="_BLANK">Fork me</a>
-      </div>
-      -->
-      
     </div>
+    
+    <div id="console" class="text-center" style="display: none">
+      ...
+    </div>
+      
+    <div class="container">
+      <div id="footer" class="text-center">
+        <!-- Donations: <strong><a href="bitcoin:18tWFBT2aedQAG6qV27hGdHKibCcgEvFVY">18tWFBT2aedQAG6qV27hGdHKibCcgEvFVY</a></strong><br> -->
+        Made by <a href="https://twitter.com/berpj" target="_BLANK">@berpj</a> · <a href="https://github.com/berpj/torrent-pizza" target="_BLANK">Source code</a>
+      </div>
+    </div>    
   
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
