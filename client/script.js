@@ -1,5 +1,5 @@
 $(function(){
-  var api = 'api.pizza.bergeron.io';
+  var api = 'api.torrent.pizza';
   
   $('#input').on('input', function(e){
     if ($('#input').val().length > 0)
@@ -12,13 +12,14 @@ $(function(){
     e.preventDefault();
     
     $('form').hide();
+    $('h2').hide();
     
     $('#player-holder').html('<video id="player" autoplay="true" controls></video>');
     
     $('#console').html('Starting...');
     $('#console').show();
 
-    hash = $('#input').val();
+    hash = $('#input').val().trim().replace('magnet:?xt=urn:btih:', '').substr(0, 40);
     
     $.get('http://' + api + '/add/' + hash, function(data) {
       $.get('http://' + api + '/metadata/' + hash, function(data) {
