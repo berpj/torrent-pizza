@@ -18,11 +18,13 @@ getMovie = function (torrent) {
 
 function cb () {}
 
-router.get('/add/:hash', function(req, res, next) {
-	var hash = req.params.hash;
+router.get('/add/:torrent', function(req, res, next) {
+	var torrent = req.params.torrent;
+	
+	console.log(torrent);
 
 	try {
-		client.add(hash, function (torrent) {
+		client.add(torrent, function (torrent) {
 			var file = getMovie(torrent);
 			
 			console.log('Adding torrent');
@@ -45,11 +47,11 @@ router.get('/add/:hash', function(req, res, next) {
 	}
 });
 
-router.get('/metadata/:hash', function(req, res, next) {
-	var hash = req.params.hash;
+router.get('/metadata/:torrent', function(req, res, next) {
+	var torrent = req.params.torrent;
 
 	try {
-		var torrent = client.get(hash);
+		var torrent = client.get(torrent);
 		var file = getMovie(torrent);
 
 		res.json({ torrent: torrent.infoHash, name: file.name, size: file.length });
@@ -59,11 +61,11 @@ router.get('/metadata/:hash', function(req, res, next) {
 	}
 });
 
-router.get('/stream/:hash', function(req, res, next) {
-	var hash = req.params.hash;
+router.get('/stream/:torrent', function(req, res, next) {
+	var torrent = req.params.torrent;
 
 	try {
-		var torrent = client.get(hash);
+		var torrent = client.get(torrent);
 		var file = getMovie(torrent);
 		var total = file.length;
 

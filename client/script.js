@@ -13,23 +13,26 @@ $(function(){
     
     $('form').hide();
     $('h2').hide();
+    $('#examples').hide();
     
     $('#player-holder').html('<video id="player" autoplay="true" controls></video>');
     
     $('#console').html('Starting...');
     $('#console').show();
 
-    hash = $('#input').val().trim().replace('magnet:?xt=urn:btih:', '').substr(0, 40);
+    //magnet = $('#input').val().trim().replace('magnet:?xt=urn:btih:', '').substr(0, 40);
     
-    $.get('http://' + api + '/add/' + hash, function(data) {
-      $.get('http://' + api + '/metadata/' + hash, function(data) {
+    magnet = encodeURIComponent($('#input').val().trim());
+    
+    $.get('http://' + api + '/add/' + magnet, function(data) {
+      $.get('http://' + api + '/metadata/' + magnet, function(data) {
         console.log(data);
         
         window.location.hash = data.torrent
         
         $('#console').html(data.name.substr(0, data.name.lastIndexOf('.')).split('.').join(' '));
         
-        $('#player').html('<source src="http://' + api + '/stream/' + hash + '" type="video/mp4">');
+        $('#player').html('<source src="http://' + api + '/stream/' + magnet + '" type="video/mp4">');
       });
     });
   });

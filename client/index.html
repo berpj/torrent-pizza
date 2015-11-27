@@ -15,6 +15,7 @@ Henry Rollins
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link href="https://afeld.github.io/emoji-css/emoji.css" rel="stylesheet">
     <style>
       body {
@@ -48,8 +49,17 @@ Henry Rollins
         color: #ddd;
       }
       
+      h3 {
+        font-weight: normal;
+        font-size: 1.45em;
+        margin-bottom: 25px;
+        padding-top: 0;
+        margin-top: 0;
+      }
+      
       form {
-        margin-top: 65px !important;
+        margin-top: 75px !important;
+        margin-top: 11% !important;
         margin-bottom: 65px !important;
       }
       
@@ -80,16 +90,47 @@ Henry Rollins
         font-size: 1.7em;
         background-color: #222;
         width: 100%;
+        
+        position: fixed;
+        left: 0%;
+        right: 0%;
+        bottom: 10%;
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+      
+      #examples {
+        margin-bottom: 5%;
+        text-align: center;
+      }
+      
+      .example {
+        border: 1px solid #555;
+        border-radius: 3px;
+        background-color: black;
+        padding-top: 1px;
+        padding-bottom: 1px;
+      }
+      
+      #examples a {
+        color: #FF6347 !important;
+        border-bottom: 1px #FF6347 dashed;
+        font-size: 1.1em;
+      }
+      
+      .example img {
+        max-width: 100%;
       }
       
       #footer {
         position: fixed;
-        left: 0;
-        right: 0;
+        left: 10%;
+        right: 10%;
         bottom: 0;
-        background-color: #333030;
-        padding-top: 10px;
+        background-color: transparent;
+        padding-top: 0;
         padding-bottom: 10px;
+        z-index: -100;
       }
     </style>
   </head>
@@ -110,11 +151,8 @@ Henry Rollins
 
       <div id="player-holder"></div>
       
-      <form class="form-inline text-center">
-        
-        <div class="form-group">
-          <input type="text" id="input" placeholder="Paste a magnet link" class="form-control input-lg">
-        </div>
+      <form class="form-inline text-center">        
+        <input type="text" id="input" placeholder="Paste a magnet link" class="form-control input-lg">
         <div id="instructions" class="text-muted" style="display: none">Press Enter to start streaming...</div>
         <!--<button type="submit" id="submit" class="btn btn-default">Start streaming!</button>-->
       </form>
@@ -126,6 +164,44 @@ Henry Rollins
       
     <div class="container">
       <div id="footer" class="text-center">
+        <div id="examples" class="hidden-xs">
+          <h3>Last streams:</h3>
+          <div class="row">
+            <div class="col-sm-3">
+              <a href="/#d9cef4512e84ca5f2d824cba0318363f92071dd2">
+                <div class="example">
+                  <img src="example_1.png">
+                </div>
+                The Pirate Bay AFK
+              </a>
+            </div>
+            <div class="col-sm-3">
+              <a href="/#713025becf9c414671a76dcc07efb6c3e3a2755b">
+                <div class="example">
+                  <img src="example_2.png">
+                </div>
+                Just Do It
+              </a>
+            </div>
+            <div class="col-sm-3">
+              <a href="/#a6ea88c974d97f8e3c043b5900eb8e5a05dd22df">
+                <div class="example">
+                  <img src="example_3.png">
+                </div>
+                Sintel
+              </a>
+            </div>
+            <div class="col-sm-3">
+              <a href="/#CBDFF6AFF00EB7FBE7F773C329C4477322DF70A5">
+                <div class="example">
+                  <img src="example_4.png">
+                </div>
+                The Third Letter
+              </a>
+            </div>
+          </div>
+        </div>
+        
         <!-- Donations: <strong><a href="bitcoin:18tWFBT2aedQAG6qV27hGdHKibCcgEvFVY">18tWFBT2aedQAG6qV27hGdHKibCcgEvFVY</a></strong><br> -->
         Made by <a href="https://twitter.com/berpj" target="_BLANK">@berpj</a> · <a href="http://www.google.com/recaptcha/mailhide/d?k=01E7bfYWS312xdjDYrbAbdfg==&c=KWA7klewrQCDXz62_4zAWRxFOOHvIPICOLiik5aa8Gs=" target="_BLANK">Contact</a> · <a href="https://github.com/berpj/torrent-pizza" target="_BLANK">Source code</a>
       </div>
