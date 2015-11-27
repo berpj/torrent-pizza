@@ -42,4 +42,8 @@ $(function(){
     
     $('form').submit();
   }
+  
+  $('.hash-link').on('click', function(){
+    location.reload();
+  });
 });
