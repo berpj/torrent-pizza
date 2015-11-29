@@ -24,15 +24,15 @@ $(function(){
     
     magnet = encodeURIComponent($('#input').val().trim());
     
-    $.get('http://' + api + '/add/' + magnet, function(data) {
-      $.get('http://' + api + '/metadata/' + magnet, function(data) {
+    $.get('https://' + api + '/add/' + magnet, function(data) {
+      $.get('https://' + api + '/metadata/' + magnet, function(data) {
         console.log(data);
         
         window.location.hash = data.torrent
         
         $('#console').html(data.name.substr(0, data.name.lastIndexOf('.')).split('.').join(' '));
         
-        $('#player').html('<source src="http://' + api + '/stream/' + magnet + '" type="video/mp4">');
+        $('#player').html('<source src="https://' + api + '/stream/' + magnet + '" type="video/mp4">');
       });
     });
   });
